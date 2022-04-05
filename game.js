@@ -15,6 +15,7 @@ const game = {
         const imgTag = document.createElement('img');
 
         imgTag.src = imgSource;
+        imgTag.classList.add('hidden');
         block.appendChild(imgTag);
         block.classList.add('block');
     }
