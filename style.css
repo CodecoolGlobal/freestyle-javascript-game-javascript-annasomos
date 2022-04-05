@@ -40,3 +40,8 @@ body {
     text-align: center;
     background: url('img/memoris_card_block.png');
 }
+
+.hidden{
+    height: 0px;
+    width: 0px;
+}
