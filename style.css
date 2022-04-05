@@ -1,0 +1,44 @@
+body {
+    background-image: url("img/gradient-background.jpeg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+}
+
+
+.current-score{
+    height: 20%;
+    width:  20%;
+    visibility: visible;
+    background-color: black;
+    border: brown 10px;
+    color: aliceblue;
+}
+
+
+.game-field {
+    margin: 0 auto;
+    display: flex;
+    border: 5px aquamarine;
+    border-radius: 2px;
+    flex-direction: column;
+}
+
+.game-field .row {
+    height: 80px;
+    display: flex;
+}
+
+.game-field .row .field {
+    height: 80px;
+    width: 80px;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-field .row .field.card {
+    text-align: center;
+    background: url('img/memoris_card_block.png');
+}
