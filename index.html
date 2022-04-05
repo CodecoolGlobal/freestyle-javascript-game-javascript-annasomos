@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Javascript Game</title>
     <meta charset="UTF-8">
+    <title>memoris</title>
     <!-- http://proger.i-forge.net/The_smallest_transparent_pixel/ -->
     <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">
+    <link rel="stylesheet" href="style.css">
+    <script src="game.js" defer></script>
 </head>
 <body>
 
+<div class="stats">
+    <label for="points">Score:</label>
+    <input type="text" id="points" disabled value="0">
+</div>
+<div class="game-field" id="game-field">
+</div>
+<div class="container current-score" id="current-score"></div>
+<div class="container player-name" id="player-name"></div>
+<div class="container leaderboard" id="leaderboard"></div>
 </body>
 </html>
