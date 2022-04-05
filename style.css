@@ -19,8 +19,6 @@ body {
 .game-field {
     margin: 0 auto;
     display: flex;
-    border: 5px aquamarine;
-    border-radius: 2px;
     flex-direction: column;
 }
 
@@ -41,4 +39,9 @@ body {
 .game-field .row .field.card {
     text-align: center;
     background: url('img/memoris_card_block.png');
+}
+
+.hidden{
+    height: 0px;
+    width: 0px;
 }
