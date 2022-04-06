@@ -11,7 +11,7 @@ const game = {
         const field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
 
-        imgTag.src = this.getRandomImageSource();;
+        imgTag.src = this.getRandomImageSource();
         imgTag.classList.add('hidden');
         field.appendChild(imgTag);
         field.classList.add('card');
@@ -53,6 +53,34 @@ const game = {
                         data-col="${col}"
                         >
                     </div>`);
+    },
+
+    playerMoveBlock: function () {
+        const card = document.querySelector('.game-field .row .field. card. current');
+        let newCoordinate;
+        let targetField;
+        card.addEventListener('keydown', function (event) {
+        switch (event.key) {
+            case "ArrowLeft":
+            case "A":
+                newCoordinate = {x: card.dataset.col - 1, y: card.dataset.row};
+                targetField = getFieldByCoordinate(newCoordinate)
+                break;
+            case "ArrowRight":
+            case "D":
+                newCoordinate = {x: card.dataset.col + 1, y: card.dataset.row};
+                targetField = getFieldByCoordinate(newCoordinate)
+                break;
+            case "ArrowDown":
+            case "S":
+                newCoordinate = {x: card.dataset.col, y: card.dataset.row + 1};
+                targetField = getFieldByCoordinate(newCoordinate)
+                break;
+        }
+        // moveCard(card, targetField);
+        }
+        )
+
     },
 
 }
