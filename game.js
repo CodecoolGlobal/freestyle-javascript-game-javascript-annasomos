@@ -1,3 +1,5 @@
+import './config.js'
+
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
