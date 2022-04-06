@@ -11,12 +11,9 @@ const game = {
     },
 
     createCard: function() {
-        const imgTag = document.createElement('img');
-        imgTag.src = this.getRandomImageSource();
-        imgTag.classList.add('hidden');
+        const imgTag = this.getRandomImageTag()
+        const card = this.getRandomStartingCard(imgTag);
 
-        let card = this.getRandomStartingCard();
-        
         this.fallTimerId = setInterval( () => {
             let currentField = document.querySelector('.game-field .row .field.card.current');
             const fieldBelow = getFieldBelow(currentField);
@@ -32,8 +29,12 @@ const game = {
         }, config.fallSpeed[this.difficulty]);
     },
 
-    getRandomImageSource: function () {
-        return config.memoryImageSources[Math.round(Math.random() * (config.memoryImageSources.length - 1))]
+    getRandomImageTag: function () {
+        const imgTag = document.createElement('img');
+        imgTag.src = config.memoryImageSources[Math.round(Math.random() * (config.memoryImageSources.length - 1))];
+        imgTag.classList.add('hidden');
+
+        return imgTag;
     },
 
     getRandomStartingCard: function (imgTag) {
