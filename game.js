@@ -1,4 +1,5 @@
-import {config} from'./config.js';
+import {config} from './config.js';
+
 
 const game = {
     init : function() {
@@ -73,6 +74,30 @@ const game = {
                         data-col="${col}"
                         >
                     </div>`);
+    },
+
+    playerMoveBlock: function () {
+        const card = document.querySelector('.game-field .row .field.card.current');
+        card.addEventListener('keydown', function (event) {
+            let newCoordinate;
+            let targetField;
+            switch (event.key) {
+                case "ArrowLeft":
+                case "A":
+                    newCoordinate = {x: card.dataset.col - 1, y: card.dataset.row};
+                    break;
+                case "ArrowRight":
+                case "D":
+                    newCoordinate = {x: card.dataset.col + 1, y: card.dataset.row};
+                    break;
+                case "ArrowDown":
+                case "S":
+                    newCoordinate = {x: card.dataset.col, y: card.dataset.row + 1};
+                    break;
+            }
+            targetField = getFieldByCoordinate(newCoordinate);
+            // moveCard(card, targetField);
+        })
     },
 
 }

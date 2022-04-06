@@ -9,3 +9,4 @@ export const config = {
     cardImageSource : 'img/memoris_card_block',
     memoryImageSources : ['img/memoris_card_block']
 };
+
