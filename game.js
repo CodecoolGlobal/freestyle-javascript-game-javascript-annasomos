@@ -6,11 +6,11 @@ const game = {
         this.gameField = document.querySelector('#game-field');
         this.difficulty = 'hard'
         this.initBlocks();
-        this.createBlock();
+        this.createCard();
         this.playerMoveBlock();
     },
 
-    createBlock: function() {
+    createCard: function() {
         const col = Math.round(Math.random() * (config.cols - 1));
         let field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
@@ -31,7 +31,7 @@ const game = {
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
                 currentField.classList.remove('current');
-                game.createBlock();
+                game.createCard();
             }
         }, config.fallSpeed[this.difficulty]);
     },
