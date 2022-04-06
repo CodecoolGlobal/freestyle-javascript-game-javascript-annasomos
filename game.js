@@ -1,40 +1,39 @@
+import './config.js';
+
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
-        this.cols = 6;
-        this.rows = 8;
-        this.fallSpeed = "";
-        //this.imgSources = this.initImgSources();
         this.initBlocks();
     },
 
     createBlock: function() {
-        const col = Math.round(Math.random() * this.cols);
+        const col = Math.round(Math.random() * config.cols);
         const field = getFieldByCoordinate({x: col, y: 0});
-        const imgSource = this.imgSources[Math.round(Math.random() * this.imgSources.length)];
         const imgTag = document.createElement('img');
 
-        imgTag.src = imgSource;
+        imgTag.src = this.getRandomImageSource();;
         imgTag.classList.add('hidden');
         field.appendChild(imgTag);
         field.classList.add('card');
+    },
 
-
+    getRandomImageSource: function () {
+        return config.memoryImageSources[Math.round(Math.random() * config.memoryImageSources.length)]
     },
 
     initBlocks: function() {
         this.setGameFieldSize();
-        for (let row = 0; row < this.rows; row++) {
+        for (let row = 0; row < config.rows; row++) {
             const rowElement = this.addRow(this.gameField);
-            for (let col = 0; col < this.cols; col++) {
+            for (let col = 0; col < config.cols; col++) {
                 this.addCell(rowElement, row, col);
             }
         }
     },
 
     setGameFieldSize: function() {
-        this.gameField.style.width = (this.gameField.dataset.cellWidth * this.cols) + 'px';
-        this.gameField.style.height = (this.gameField.dataset.cellHeight * this.rows) + 'px';
+        this.gameField.style.width = (this.gameField.dataset.cellWidth * config.cols) + 'px';
+        this.gameField.style.height = (this.gameField.dataset.cellHeight * config.rows) + 'px';
     },
 
     addRow: function () {
