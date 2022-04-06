@@ -6,12 +6,12 @@ const game = {
         this.gameField = document.querySelector('#game-field');
         this.difficulty = 'hard'
         this.initBlocks();
+        this.createBlock();
+        this.playerMoveBlock();
     },
 
     createBlock: function() {
         const col = Math.round(Math.random() * (config.cols - 1));
-        //console.log(config.cols);
-        //console.log(col);
         let field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
 
@@ -29,13 +29,11 @@ const game = {
 
             currentField = document.querySelector('.game-field .row .field.card.current');
             if (isCardTouchedDown(currentField)) {
-                console.log(this.fallTimerId)
                 clearInterval(this.fallTimerId);
                 currentField.classList.remove('current');
                 game.createBlock();
             }
         }, config.fallSpeed[this.difficulty]);
-        console.log(this.fallTimerId + ' set');
     },
 
     getRandomImageSource: function () {
@@ -77,27 +75,28 @@ const game = {
     },
 
     playerMoveBlock: function () {
-        const card = document.querySelector('.game-field .row .field.card.current');
-        card.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', function (event) {
+            let card = document.querySelector('.game-field .row .field.card.current');
             let newCoordinate;
             let targetField;
+            console.log(event.key);
             switch (event.key) {
                 case "ArrowLeft":
                 case "A":
-                    newCoordinate = {x: card.dataset.col - 1, y: card.dataset.row};
+                    newCoordinate = {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
                     break;
                 case "ArrowRight":
                 case "D":
-                    newCoordinate = {x: card.dataset.col + 1, y: card.dataset.row};
+                    newCoordinate = {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
                     break;
                 case "ArrowDown":
                 case "S":
-                    newCoordinate = {x: card.dataset.col, y: card.dataset.row + 1};
+                    newCoordinate = {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
             }
             targetField = getFieldByCoordinate(newCoordinate);
-            // moveCard(card, targetField);
-        })
+            moveCard(card, targetField);
+        });
     },
 
 }
@@ -127,10 +126,7 @@ function moveCard(sourceField, destinationField) {
 
 function isCardTouchedDown(field) {
     const fieldBelow = getFieldBelow(field);
-    //console.log('field:' + field.dataset.col + ', ' + field.dataset.row);
-
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
 }
 
 game.init();
-game.createBlock();
