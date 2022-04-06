@@ -18,7 +18,13 @@ const game = {
         field.classList.add('card');
 
         const fallTimerId = setInterval(function () {
-            moveCardDown(field);
+            const fieldBelow = getFieldByCoordinate({
+                x: field.dataset.col,
+                y: field.dataset.row + 1
+            });
+
+            moveCard(field, fieldBelow);
+
             if (isCardTouchedDown(field)) {
                 clearInterval(fallTimerId);
             }
@@ -67,6 +73,25 @@ const game = {
 
 function getFieldByCoordinate(coordinate) {
     return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"`);
+}
+
+function moveCard(sourceField, destinationField) {
+    if (destinationField && !('card' in destinationField.classList)) {
+        const imgTag = sourceField.querySelector('img');
+
+        sourceField.classList.remove('card');
+        destinationField.classList.add('card');
+        destinationField.appendChild(imgTag);
+    }
+}
+
+function isCardTouchedDown(field) {
+    const fieldBelow = getFieldByCoordinate({
+                x: field.dataset.col,
+                y: field.dataset.row + 1
+            });
+
+    return !(fieldBelow && 'card' in fieldBelow.classList);
 }
 
 game.init();
