@@ -7,20 +7,20 @@
     <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">
     <link rel="stylesheet" href="style.css">
     <script type="module" src="config.js" defer></script>
-    <script src="game.js" defer></script>
+    <script type="module" src="game.js" defer></script>
 </head>
 <body>
-
-<div class="stats">
-    <label for="points">Score:</label>
-    <input type="text" id="points" disabled value="0">
-</div>
-<div class="game-field" id="game-field" data-cell-width="80" data-cell-height="80">
-</div>
-<div class="container current-score" id="current-score">
-    score container
-</div>
-<div class="container player-name" id="player-name"></div>
-<div class="container leaderboard" id="leaderboard"></div>
+    <div class="board">
+        <div class="game-field" id="game-field" data-cell-width="80" data-cell-height="80">
+        </div>
+            <div class="infobox">
+                <div class="container current-score" id="current-score">
+                    Current score:12345
+                </div>
+                <div class="container player-name" id="player-name">
+                    <label class="labelclass"> Nickname: <input class="inputclass" type="text"></label>
+                </div>
+            </div>
+    </div>
 </body>
 </html>

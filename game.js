@@ -1,4 +1,4 @@
-import './config.js';
+import {config} from './config.js';
 
 const game = {
     init : function() {

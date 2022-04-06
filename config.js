@@ -1,4 +1,4 @@
-const config = {
+export const config = {
     cols: 6,
     rows: 8,
     fallSpeed: {
@@ -10,4 +10,3 @@ const config = {
     memoryImageSources : []
 };
 
-export default config;
