@@ -11,16 +11,12 @@ const game = {
     },
 
     createCard: function() {
-        const col = Math.round(Math.random() * (config.cols - 1));
-        let field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
-
         imgTag.src = this.getRandomImageSource();
         imgTag.classList.add('hidden');
-        field.appendChild(imgTag);
-        field.classList.add('card');
-        field.classList.add('current');
 
+        let card = this.getRandomStartingCard();
+        
         this.fallTimerId = setInterval( () => {
             let currentField = document.querySelector('.game-field .row .field.card.current');
             const fieldBelow = getFieldBelow(currentField);
@@ -38,6 +34,15 @@ const game = {
 
     getRandomImageSource: function () {
         return config.memoryImageSources[Math.round(Math.random() * (config.memoryImageSources.length - 1))]
+    },
+
+    getRandomStartingCard: function (imgTag) {
+        const col = Math.round(Math.random() * (config.cols - 1));
+        const card = getFieldByCoordinate({x: col, y: 0});
+        card.classList.add('card');
+        card.classList.add('current');
+        card.appendChild(imgTag);
+        return card;
     },
 
     initBlocks: function() {
