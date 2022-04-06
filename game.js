@@ -12,7 +12,7 @@ const game = {
 
     createCard: function() {
         const imgTag = this.getRandomImageTag()
-        const card = this.getRandomStartingCard(imgTag);
+        const card = this.createRandomCardTag(imgTag);
 
         this.fallTimerId = setInterval( () => {
             let currentField = document.querySelector('.game-field .row .field.card.current');
@@ -37,7 +37,7 @@ const game = {
         return imgTag;
     },
 
-    getRandomStartingCard: function (imgTag) {
+    createRandomCardTag: function (imgTag) {
         const col = Math.round(Math.random() * (config.cols - 1));
         const card = getFieldByCoordinate({x: col, y: 0});
         card.classList.add('card');
