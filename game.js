@@ -1,8 +1,9 @@
-import './config.js';
+import {config} from'./config.js';
 
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
+        this.difficulty = 'easy'
         this.initBlocks();
     },
 
@@ -11,10 +12,17 @@ const game = {
         const field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
 
-        imgTag.src = this.getRandomImageSource();;
+        imgTag.src = this.getRandomImageSource();
         imgTag.classList.add('hidden');
         field.appendChild(imgTag);
         field.classList.add('card');
+
+        const fallTimerId = setInterval(function () {
+            moveCardDown(field);
+            if (isCardTouchedDown(field)) {
+                clearInterval(fallTimerId);
+            }
+        }, config.fallSpeed[this.difficulty]);
     },
 
     getRandomImageSource: function () {

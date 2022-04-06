@@ -1,4 +1,4 @@
-const config = {
+export const config = {
     cols: 6,
     rows: 8,
     fallSpeed: {
@@ -9,5 +9,3 @@ const config = {
     cardImageSource : 'img/memoris_card_block',
     memoryImageSources : []
 };
-
-export default config;
