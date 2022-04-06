@@ -3,36 +3,42 @@ import {config} from'./config.js';
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
-        this.difficulty = 'easy'
+        this.difficulty = 'hard'
         this.initBlocks();
     },
 
     createBlock: function() {
-        const col = Math.round(Math.random() * config.cols);
-        const field = getFieldByCoordinate({x: col, y: 0});
+        const col = Math.round(Math.random() * (config.cols - 1));
+        //console.log(config.cols);
+        //console.log(col);
+        let field = getFieldByCoordinate({x: col, y: 0});
         const imgTag = document.createElement('img');
 
         imgTag.src = this.getRandomImageSource();
         imgTag.classList.add('hidden');
         field.appendChild(imgTag);
         field.classList.add('card');
+        field.classList.add('current');
 
-        const fallTimerId = setInterval(function () {
-            const fieldBelow = getFieldByCoordinate({
-                x: field.dataset.col,
-                y: field.dataset.row + 1
-            });
+        this.fallTimerId = setInterval( () => {
+            let currentField = document.querySelector('.game-field .row .field.card.current');
+            const fieldBelow = getFieldBelow(currentField);
 
-            moveCard(field, fieldBelow);
+            moveCard(currentField, fieldBelow);
 
-            if (isCardTouchedDown(field)) {
-                clearInterval(fallTimerId);
+            currentField = document.querySelector('.game-field .row .field.card.current');
+            if (isCardTouchedDown(currentField)) {
+                console.log(this.fallTimerId)
+                clearInterval(this.fallTimerId);
+                currentField.classList.remove('current');
+                game.createBlock();
             }
         }, config.fallSpeed[this.difficulty]);
+        console.log(this.fallTimerId + ' set');
     },
 
     getRandomImageSource: function () {
-        return config.memoryImageSources[Math.round(Math.random() * config.memoryImageSources.length)]
+        return config.memoryImageSources[Math.round(Math.random() * (config.memoryImageSources.length - 1))]
     },
 
     initBlocks: function() {
@@ -72,26 +78,34 @@ const game = {
 }
 
 function getFieldByCoordinate(coordinate) {
-    return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"`);
+    return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"]`);
+}
+
+function getFieldBelow(field) {
+    const col = parseInt(field.dataset.col);
+    const row = parseInt(field.dataset.row) + 1;
+
+    return getFieldByCoordinate({x: col, y: row});
 }
 
 function moveCard(sourceField, destinationField) {
-    if (destinationField && !('card' in destinationField.classList)) {
+    if (destinationField !== null && !(destinationField.classList.contains('card'))) {
         const imgTag = sourceField.querySelector('img');
 
         sourceField.classList.remove('card');
+        sourceField.classList.remove('current');
         destinationField.classList.add('card');
+        destinationField.classList.add('current');
         destinationField.appendChild(imgTag);
     }
 }
 
 function isCardTouchedDown(field) {
-    const fieldBelow = getFieldByCoordinate({
-                x: field.dataset.col,
-                y: field.dataset.row + 1
-            });
+    const fieldBelow = getFieldBelow(field);
+    //console.log('field:' + field.dataset.col + ', ' + field.dataset.row);
 
-    return !(fieldBelow && 'card' in fieldBelow.classList);
+    return (fieldBelow === null || fieldBelow.classList.contains('card'));
 }
 
 game.init();
+game.createBlock();
