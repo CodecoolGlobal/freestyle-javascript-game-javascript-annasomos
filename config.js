@@ -7,8 +7,21 @@ export const config = {
         hard: 200
     },
     cardImageSource : 'img/memoris_card_block',
-    memoryImageSources : ['img/memoris_card_block'],
-    hideTimeOut : 1000
+    memoryImageSources : [
+        'img/memoris_card_block',
+        'img/puppy1.png',
+        'img/puppy2.png',
+        'img/puppy3.png',
+        'img/puppy4.png',
+        'img/puppy5.png',
+        'img/puppy6.png',
+        'img/puppy7.png',
+        'img/puppy8.png',
+        'img/puppy9.png',
+        'img/puppy10.png'
+
+    ],
+    hideTimeOut : 1000,
     animationTime: 1500,
     hideAnimationProgress: function (timeProgress) {return timeProgress},
     cardSize: 80
