@@ -179,8 +179,23 @@ const game = {
         requestAnimationFrame(animate);*/
     },
 
-    destroyCard: function () {
-        [firstCard, secondCard] = getMatchedCards()
+    destroyCards: function () {
+        let firstCard,
+        secondCard;
+        [firstCard, secondCard] = getMatchedCards();
+
+        switch (getCardsOrientation(firstCard, secondCard)) {
+            case 'horizontal':
+                break;
+            case 'vertical':
+                break;
+            case 'nonneighbour':
+                destroyCard(firstCard);
+                sinkColumn(firstCard)
+                destroyCard(secondCard);
+                sinkColumn(secondCard);
+                break;
+        }
     }
 }
 
@@ -229,6 +244,25 @@ function getMatchedCards() {
     return Array
         .from(document.querySelectorAll('.card img'))
         .map(imgTag => imgTag.parentElement);
+}
+
+function getCardsOrientation(firstCard, secondCard) {
+    const colDifference = Math.abs(Number(firstCard.dataset.col) - Number(secondCard.dataset.col));
+    const rowDifference = Math.abs(Number(firstCard.dataset.row) - Number(secondCard.dataset.row));
+
+    if (colDifference === 0 && rowDifference === 1) {
+        return 'vertical';
+    } else if(colDifference === 1 && rowDifference === 0) {
+        return 'horizontal';
+    } else {
+        return 'nonneighbour';
+    }
+}
+
+function destroyCard(card) {
+    card.classList.remove('card');
+    const clonedCard = card.cloneNode();
+    card.parentElement.replaceChild(clonedCard, card);
 }
 
 game.init();
