@@ -12,6 +12,7 @@ const game = {
         this.createCard();
         this.playerMoveBlock();
         this.revealCards();
+        setHighScore(window.localStorage.getItem('highScore') || 0);
     },
 
     createCard: function() {
@@ -293,12 +294,6 @@ function isCardTouchedDown(field) {
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
 }
 
-function getMatchedCards() {
-    return Array
-        .from(document.querySelectorAll('.card img'))
-        .map(imgTag => imgTag.parentElement);
-}
-
 function getCardsOrientation(firstCard, secondCard) {
     const colDifference = Number(firstCard.dataset.col) - Number(secondCard.dataset.col);
     const rowDifference = Number(firstCard.dataset.row) - Number(secondCard.dataset.row);
@@ -354,6 +349,7 @@ function sinkColumn(card) {
 function gameLost() {
     let freezeBoard = game.gameField.cloneNode(true);
     game.gameField.parentNode.replaceChild(freezeBoard, game.gameField);
+    game.refreshHighScore();
     alert('YA DEAD');
 }
 
