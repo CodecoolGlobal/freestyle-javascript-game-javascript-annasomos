@@ -117,7 +117,7 @@ const game = {
                     let childImage = getChildImage(card);
                     childImage.style.width = '80px';
                     childImage.style.height = '80px';
-                    childImage.className = 'open';
+                    childImage.classList.remove('hidden');
                     if (this.openCards === 0){
                         this.firstImg = childImage;
                         this.openCards++;
