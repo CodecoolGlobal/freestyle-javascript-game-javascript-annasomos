@@ -12,7 +12,7 @@ body {
     flex-direction: column;
 }
 
-.player-name{
+.high-score{
     width: 9em;
     display: flex;
     padding: 10px;
