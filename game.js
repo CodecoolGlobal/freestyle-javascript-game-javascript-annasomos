@@ -113,6 +113,7 @@ const game = {
 
     revealCards: function() {
         this.gameField.addEventListener('click', (event) => {
+            console.log(`reveal image this: ${this}`)
             if(event.target.classList.contains('card')) {
                 if (this.openCards < 2) {
                     let childImage = getChildImage(event.target);
@@ -133,12 +134,20 @@ const game = {
                     }
                 }
             }
-            })
-        },
-
+        })
+    },
 
     hideImages: function () {
-        let startTime;
+        console.log(`hide image this: ${this}`)
+
+        game.firstImg.removeAttribute('style');
+        game.firstImg.classList.add('hidden');
+        game.secondImg.removeAttribute('style');
+        game.secondImg.classList.add('hidden');
+        game.openCards = 0;
+        console.log(this.openCards);
+
+        /*let startTime;
         function animate(currentTime) {
             console.log('145-os sor');
             if(!startTime) {
@@ -165,7 +174,7 @@ const game = {
                 console.log(this.openCards);
             }
         }
-        requestAnimationFrame(animate);
+        requestAnimationFrame(animate);*/
     }
 }
 
