@@ -1,10 +1,11 @@
 body {
-    background-image: url("img/gradient-background.jpeg");
+    background-image: url("img/memoris_background_2.png");
     background-size: 100%;
     background-repeat: no-repeat;
 }
 .board{
     display: flex;
+    justify-content: center;
 }
 
 .infobox{
@@ -12,8 +13,8 @@ body {
     flex-direction: column;
 }
 
-.player-name{
-    width: 9em;
+.high-score{
+    width: fit-content;
     display: flex;
     padding: 10px;
     margin: 40px;
@@ -22,44 +23,30 @@ body {
     background-color: black;
     opacity: 70%;
     color: #944fd2;
-    border: 10px solid black;
+    border: 5px solid black;
     border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3ClinearGradient id='g' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23cffffe' /%3E%3Cstop offset='25%25' stop-color='%23f9f7d9' /%3E%3Cstop offset='50%25' stop-color='%23fce2ce' /%3E%3Cstop offset='100%25' stop-color='%23ffc1f3' /%3E%3C/linearGradient%3E %3Cpath d='M1.5 1.5 l97 0l0 97l-97 0 l0 -97' stroke-linecap='square' stroke='url(%23g)' stroke-width='3'/%3E %3C/svg%3E") 1;
 
 }
 
 
-
-.labelclass{
-    display: flex;
-}
-
-.inputclass{
-    background-color: transparent;
-    border-color: transparent;
-    width: 180px;
-    color: #944fd2;
-    font-size: 40px;
-}
-
 .current-score{
     padding: 10px;
-    margin: 40px;
+    margin: 50px;
     font-size: 40px;
-    width:  auto;
+    width:  fit-content;
     visibility: visible;
     background-color: black;
     opacity: 70%;
-    color: #944fd2;
-    border: 10px solid black;
+    color: white;
+    border: 5px solid black;
     border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3ClinearGradient id='g' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23cffffe' /%3E%3Cstop offset='25%25' stop-color='%23f9f7d9' /%3E%3Cstop offset='50%25' stop-color='%23fce2ce' /%3E%3Cstop offset='100%25' stop-color='%23ffc1f3' /%3E%3C/linearGradient%3E %3Cpath d='M1.5 1.5 l97 0l0 97l-97 0 l0 -97' stroke-linecap='square' stroke='url(%23g)' stroke-width='3'/%3E %3C/svg%3E") 1;
 }
 
 
 .game-field {
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    border: 10px solid black;
+    border: 2px solid black;
     border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3ClinearGradient id='g' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23cffffe' /%3E%3Cstop offset='25%25' stop-color='%23f9f7d9' /%3E%3Cstop offset='50%25' stop-color='%23fce2ce' /%3E%3Cstop offset='100%25' stop-color='%23ffc1f3' /%3E%3C/linearGradient%3E %3Cpath d='M1.5 1.5 l97 0l0 97l-97 0 l0 -97' stroke-linecap='square' stroke='url(%23g)' stroke-width='3'/%3E %3C/svg%3E") 1;
 }
 
@@ -72,15 +59,15 @@ body {
     height: 80px;
     width: 80px;
     background-color: black;
-    opacity: 70%;
     margin: 0;
     padding: 0;
+    border: 1px solid darkgray;
     box-sizing: border-box;
 }
 
 .game-field .row .field.card {
     text-align: center;
-    background: url('img/memoris_card_block.png');
+    background: url('img/tetrisblock.png');
 }
 
 .hidden{

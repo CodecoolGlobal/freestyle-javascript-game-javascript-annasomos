@@ -27,8 +27,12 @@ const game = {
             currentField = getCurrentCard();
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
-                currentField.classList.remove('current');
-                game.createCard();
+                if(currentField.dataset.row === "0"){
+                    gameLost();
+                } else {
+                    currentField.classList.remove('current');
+                    game.createCard();
+                }
             }
         }, config.fallSpeed[this.difficulty]);
     },
@@ -177,7 +181,33 @@ const game = {
             }
         }
         requestAnimationFrame(animate);*/
+    },
+    refreshHighScore(){
+        let currentScore = getCurrentScore();
+        let highScore = getHighScore();
+        if (currentScore > highScore) {
+            window.localStorage.setItem('highScore', currentScore);
+            setHighScore(currentScore)
+        }
     }
+}
+
+function setHighScore(newHighScore){
+    document.querySelector('#high-score').innerText = `High Score: ${newHighScore}`
+}
+
+function getScore(tagId){
+     let getScore = document.querySelector(tagId);
+     let Score = getScore.innerText.split(':');
+     return parseInt(Score[1]);
+}
+
+function getHighScore(){
+ return getScore('#high-score')
+}
+
+function getCurrentScore(){
+ return getScore('#current-score')
 }
 
 function areImagesMatched(firstImg,secondImg){
@@ -219,6 +249,12 @@ function moveCard(sourceField, destinationField) {
 function isCardTouchedDown(field) {
     const fieldBelow = getFieldBelow(field);
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
+}
+
+function gameLost() {
+    let freezeBoard = game.gameField.cloneNode(true);
+    game.gameField.parentNode.replaceChild(freezeBoard, game.gameField);
+    alert('YA DEAD');
 }
 
 game.init();
