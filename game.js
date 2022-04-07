@@ -12,7 +12,7 @@ const game = {
 
     createCard: function() {
         const imgTag = this.getRandomImageTag()
-        const card = this.createRandomCardTag(imgTag);
+        this.createRandomCardTag(imgTag);
 
         this.fallTimerId = setInterval( () => {
             let currentField = getCurrentCard();
