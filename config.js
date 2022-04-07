@@ -7,6 +7,7 @@ export const config = {
         hard: 200
     },
     cardImageSource : 'img/memoris_card_block',
-    memoryImageSources : ['img/memoris_card_block']
+    memoryImageSources : ['img/memoris_card_block'],
+    hideTimeOut : 1000
 };
 

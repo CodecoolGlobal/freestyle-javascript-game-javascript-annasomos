@@ -5,6 +5,9 @@ const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
         this.difficulty = 'hard'
+        this.openCards = 0;
+        this.firstImg = null;
+        this.secondImg = null;
         this.initBlocks();
         this.createCard();
         this.playerMoveBlock();
@@ -105,8 +108,46 @@ const game = {
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
             }
+    },
+    revealCards: function(){
+        let allCards = document.querySelectorAll('game-field. row. field.card');
+        for (let card of allCards){
+            card.addEventListener('click',(event )=>{
+                if (this.openCards < 2) {
+                    let childImage = getChildImage(card);
+                    childImage.style.width = '80px';
+                    childImage.style.height = '80px';
+                    childImage.className = 'open';
+                    if (this.openCards === 0){
+                        this.firstImg = childImage;
+                        this.openCards++;
+                    }
+                    else if(this.openCards === 1){
+                        this.secondImg = childImage;
+                        this.openCards++;
+                    }
+                    else{
+                        if (areImagesMatched(this.firstImg,this.secondImg)){
+                            //destroy cards
+                        }
+                        else{
+                            //setTimeout(hideImages,config.hideTimeOut);
+                        }
+                    }
+                }
+            })
+        }
     }
 }
+
+function areImagesMatched(firstImg,secondImg){
+    return firstImg.src === secondImg.src;
+}
+
+function getChildImage(card){
+    return card.querySelector('img');
+}
+
 
 function getFieldByCoordinate(coordinate) {
     return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"]`);
