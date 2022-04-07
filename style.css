@@ -5,6 +5,7 @@ body {
 }
 .board{
     display: flex;
+    justify-content: center;
 }
 
 .infobox{
@@ -13,7 +14,7 @@ body {
 }
 
 .high-score{
-    width: 9em;
+    width: fit-content;
     display: flex;
     padding: 10px;
     margin: 40px;
@@ -28,24 +29,11 @@ body {
 }
 
 
-
-.labelclass{
-    display: flex;
-}
-
-.inputclass{
-    background-color: transparent;
-    border-color: transparent;
-    width: 180px;
-    color: #944fd2;
-    font-size: 40px;
-}
-
 .current-score{
     padding: 10px;
     margin: 40px;
     font-size: 40px;
-    width:  auto;
+    width:  fit-content;
     visibility: visible;
     background-color: black;
     opacity: 70%;
@@ -56,7 +44,6 @@ body {
 
 
 .game-field {
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     border: 10px solid black;
