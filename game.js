@@ -4,7 +4,7 @@ import {config} from './config.js';
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
-        this.difficulty = 'medium'
+        this.difficulty = 'easy'
         this.openCards = 0;
         this.firstImg = null;
         this.secondImg = null;
@@ -192,15 +192,15 @@ const game = {
         switch (getCardsOrientation(firstCard, secondCard)) {
             case 'horizontal':
                 destroyCard(firstCard);
-                sinkColumn(firstCard)
+                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
                 destroyCard(secondCard);
-                sinkColumn(secondCard);
+                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
                 break;
             case 'vertical':
                 destroyCard(firstCard);
-                sinkColumn(firstCard)
+                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
                 destroyCard(secondCard);
-                sinkColumn(secondCard);
+                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
                 break;
             case 'nonneighbour':
                 destroyCard(firstCard);
