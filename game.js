@@ -4,7 +4,7 @@ import {config} from './config.js';
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
-        this.difficulty = 'medium'
+        this.difficulty = 'easy'
         this.openCards = 0;
         this.firstImg = null;
         this.secondImg = null;
@@ -81,7 +81,7 @@ const game = {
         rowElement.insertAdjacentHTML(
             'beforeend',
 
-            `<div class=" field"
+            `<div class="field"
                         data-row="${row}"
                         data-col="${col}"
                         >
@@ -102,15 +102,15 @@ const game = {
         console.log(playerInput);
         playerInput = playerInput.toLowerCase();
         switch (playerInput) {
-                case "ArrowLeft":
+                case "arrowleft":
                 case "a":
                     return {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
                     break;
-                case "ArrowRight":
+                case "arrowright":
                 case "d":
                     return {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
                     break;
-                case "ArrowDown":
+                case "arrowdown":
                 case "s":
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
@@ -133,7 +133,7 @@ const game = {
                         this.secondImg = childImage;
                         this.openCards++;
                         if (areImagesMatched(this.firstImg, this.secondImg)) {
-                            alert('images match!');
+                            this.destroyCards(this.firstImg.parentElement, this.secondImg.parentElement);
                         } else {
                             setTimeout(this.hideImages, config.hideTimeOut);
                         }
@@ -182,6 +182,36 @@ const game = {
         }
         requestAnimationFrame(animate);*/
     },
+
+    destroyCards: function (firstCard, secondCard) {
+        const firstCol = firstCard.dataset.col;
+        const firstRow = firstCard.dataset.row;
+        const secondCol = secondCard.dataset.col;
+        const secondRow = secondCard.dataset.row;
+
+        switch (getCardsOrientation(firstCard, secondCard)) {
+            case 'horizontal':
+                destroyCard(firstCard);
+                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
+                destroyCard(secondCard);
+                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+                break;
+            case 'vertical':
+                destroyCard(firstCard);
+                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
+                destroyCard(secondCard);
+                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+                break;
+            case 'nonneighbour':
+                destroyCard(firstCard);
+                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
+                destroyCard(secondCard);
+                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+
+                break;
+        }
+        this.openCards = 0;
+    },
     refreshHighScore(){
         let currentScore = getCurrentScore();
         let highScore = getHighScore();
@@ -227,6 +257,11 @@ function getCurrentCard() {
     return document.querySelector('.game-field .row .field.card.current');
 }
 
+function setCurrentScore(newCurrentScore) {
+    const scoreTag = document.querySelector('#current-score');
+    scoreTag.innerText = `Current score: ${newCurrentScore}`;
+}
+
 function getFieldBelow(field) {
     const col = parseInt(field.dataset.col);
     const row = parseInt(field.dataset.row) + 1;
@@ -249,6 +284,64 @@ function moveCard(sourceField, destinationField) {
 function isCardTouchedDown(field) {
     const fieldBelow = getFieldBelow(field);
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
+}
+
+function getMatchedCards() {
+    return Array
+        .from(document.querySelectorAll('.card img'))
+        .map(imgTag => imgTag.parentElement);
+}
+
+function getCardsOrientation(firstCard, secondCard) {
+    const colDifference = Number(firstCard.dataset.col) - Number(secondCard.dataset.col);
+    const rowDifference = Number(firstCard.dataset.row) - Number(secondCard.dataset.row);
+
+    if (colDifference === 0) {
+        return 'vertical';
+    } else if(rowDifference === 0) {
+        return 'horizontal';
+    } else {
+        return 'nonneighbour';
+    }
+}
+
+function destroyCard(card) {
+    const clonedCard = document.createElement('div');
+    const currentScore = getCurrentScore();
+    clonedCard.classList.add('field');
+    clonedCard.dataset.col = card.dataset.col;
+    clonedCard.dataset.row = card.dataset.row;
+    card.parentElement.replaceChild(clonedCard, card);
+    setCurrentScore(currentScore + config.pointGain)
+
+}
+
+function sinkColumn(card) {
+    const col = Number(card.dataset.col);
+    let row = Number(card.dataset.row) - 1;
+    let fieldBelow = card;
+    let cardToSink = getFieldByCoordinate({x: col, y: row});
+
+    while(cardToSink !== null && cardToSink.classList.contains('card')) {
+        const imgTag = cardToSink.querySelector('img');
+        cardToSink.classList.remove('card');
+        fieldBelow.classList.add('card');
+        fieldBelow.appendChild(imgTag);
+
+        fieldBelow = cardToSink;
+        row--;
+        cardToSink = getFieldByCoordinate({x: col, y: row});
+    }
+
+    /*Array
+        .from(document.querySelectorAll(`.card[data-col="${card.dataset.col}"]`))
+        .filter(elem => card.dataset.row > elem.dataset.row)
+        .sort((elem1, elem2) => {
+            return elem1.dataset.row < elem2.dataset.row ? 1: -1
+        })
+        .forEach(elem => {
+            moveCard(elem, getFieldBelow(elem))
+        });*/
 }
 
 function gameLost() {
