@@ -177,7 +177,33 @@ const game = {
             }
         }
         requestAnimationFrame(animate);*/
+    },
+    refreshHighScore(){
+        let currentScore = getCurrentScore();
+        let highScore = getHighScore();
+        if (currentScore > highScore) {
+            window.localStorage.setItem('highScore', currentScore);
+            setHighScore(currentScore)
+        }
     }
+}
+
+function setHighScore(newHighScore){
+    document.querySelector('#high-score').innerText = `High Score: ${newHighScore}`
+}
+
+function getScore(tagId){
+     let getScore = document.querySelector(tagId);
+     let Score = getScore.innerText.split(':');
+     return parseInt(Score[1]);
+}
+
+function getHighScore(){
+ return getScore('#high-score')
+}
+
+function getCurrentScore(){
+ return getScore('#current-score')
 }
 
 function areImagesMatched(firstImg,secondImg){
