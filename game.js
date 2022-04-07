@@ -27,8 +27,12 @@ const game = {
             currentField = getCurrentCard();
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
-                currentField.classList.remove('current');
-                game.createCard();
+                if(currentField.dataset.row === "0"){
+                    gameLost();
+                } else {
+                    currentField.classList.remove('current');
+                    game.createCard();
+                }
             }
         }, config.fallSpeed[this.difficulty]);
     },
@@ -219,6 +223,12 @@ function moveCard(sourceField, destinationField) {
 function isCardTouchedDown(field) {
     const fieldBelow = getFieldBelow(field);
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
+}
+
+function gameLost() {
+    let freezeBoard = game.gameField.cloneNode(true);
+    game.gameField.parentNode.replaceChild(freezeBoard, game.gameField);
+    alert('YA DEAD');
 }
 
 game.init();
