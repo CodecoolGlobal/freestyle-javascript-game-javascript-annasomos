@@ -105,6 +105,33 @@ const game = {
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
             }
+    },
+
+    hideImages: function () {
+        let startTime;
+        function animate(currentTime) {
+            if(!startTime) {
+                startTime = currentTime;
+                return;
+            }
+
+            const timeProgress = (currentTime - startTime) / config.animationTime;
+
+            if (timeProgress < 1) {
+                const animationProgress = (1 - config.hideAnimationProgress(timeProgress)) * config.cardSize;
+                this.firstImg.style.width =
+                this.firstImg.style.height =
+                this.secondImg.style.width =
+                this.secondImg.style.height = animationProgress + ' px';
+                requestAnimationFrame(animate);
+            } else {
+                delete this.firstImg.style;
+                this.firstImg.classList.add('hidden');
+                delete this.secondImg.style;
+                this.secondImg.classList.add('hidden');
+            }
+        }
+        requestAnimationFrame(animate);
     }
 }
 
