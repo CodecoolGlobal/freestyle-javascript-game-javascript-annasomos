@@ -8,7 +8,6 @@ export const config = {
     },
     cardImageSource : 'img/memoris_card_block',
     memoryImageSources : [
-        'img/memoris_card_block',
         'img/puppy1.png',
         'img/puppy2.png',
         'img/puppy3.png',

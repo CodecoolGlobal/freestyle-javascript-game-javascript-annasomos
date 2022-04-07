@@ -125,7 +125,6 @@ const game = {
                     } else if (this.openCards === 1) {
                         this.secondImg = childImage;
                         this.openCards++;
-                    } else {
                         if (areImagesMatched(this.firstImg, this.secondImg)) {
                             alert('images match!');
                         } else {
@@ -141,6 +140,7 @@ const game = {
     hideImages: function () {
         let startTime;
         function animate(currentTime) {
+            console.log('145-os sor');
             if(!startTime) {
                 startTime = currentTime;
                 return;
@@ -149,6 +149,7 @@ const game = {
             const timeProgress = (currentTime - startTime) / config.animationTime;
 
             if (timeProgress < 1) {
+                console.log('154-es sor');
                 const animationProgress = (1 - config.hideAnimationProgress(timeProgress)) * config.cardSize;
                 this.firstImg.style.width =
                 this.firstImg.style.height =
@@ -160,6 +161,8 @@ const game = {
                 this.firstImg.classList.add('hidden');
                 delete this.secondImg.style;
                 this.secondImg.classList.add('hidden');
+                this.openCards = 0;
+                console.log(this.openCards);
             }
         }
         requestAnimationFrame(animate);
