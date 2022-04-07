@@ -81,30 +81,31 @@ const game = {
     },
 
     playerMoveBlock: function () {
-        document.addEventListener('keydown', function (event) {
-            let card = getCurrentCard();
-            let newCoordinate;
-            let targetField;
-            console.log(event.key);
-            switch (event.key) {
-                case "ArrowLeft":
-                case "A":
-                    newCoordinate = {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
-                    break;
-                case "ArrowRight":
-                case "D":
-                    newCoordinate = {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
-                    break;
-                case "ArrowDown":
-                case "S":
-                    newCoordinate = {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
-                    break;
-            }
-            targetField = getFieldByCoordinate(newCoordinate);
+        document.addEventListener('keydown', (event) => {
+            const card = getCurrentCard();
+            const newCoordinate = this.getMoveDirection(event.key, card);
+            const targetField = getFieldByCoordinate(newCoordinate);
+
             moveCard(card, targetField);
         });
     },
 
+    getMoveDirection: function (playerInput, card) {
+        switch (playerInput) {
+                case "ArrowLeft":
+                case "A":
+                    return {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
+                    break;
+                case "ArrowRight":
+                case "D":
+                    return {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
+                    break;
+                case "ArrowDown":
+                case "S":
+                    return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
+                    break;
+            }
+    }
 }
 
 function getFieldByCoordinate(coordinate) {
