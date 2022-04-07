@@ -109,6 +109,7 @@ const game = {
                     break;
             }
     },
+
     revealCards: function(){
         let allCards = document.querySelectorAll('game-field. row. field.card');
         for (let card of allCards){
@@ -131,12 +132,38 @@ const game = {
                             //destroy cards
                         }
                         else{
-                            //setTimeout(hideImages,config.hideTimeOut);
+                            setTimeout(hideImages,config.hideTimeOut);
                         }
                     }
                 }
             })
+        },
+
+    hideImages: function () {
+        let startTime;
+        function animate(currentTime) {
+            if(!startTime) {
+                startTime = currentTime;
+                return;
+            }
+
+            const timeProgress = (currentTime - startTime) / config.animationTime;
+
+            if (timeProgress < 1) {
+                const animationProgress = (1 - config.hideAnimationProgress(timeProgress)) * config.cardSize;
+                this.firstImg.style.width =
+                this.firstImg.style.height =
+                this.secondImg.style.width =
+                this.secondImg.style.height = animationProgress + ' px';
+                requestAnimationFrame(animate);
+            } else {
+                delete this.firstImg.style;
+                this.firstImg.classList.add('hidden');
+                delete this.secondImg.style;
+                this.secondImg.classList.add('hidden');
+            }
         }
+        requestAnimationFrame(animate);
     }
 }
 
