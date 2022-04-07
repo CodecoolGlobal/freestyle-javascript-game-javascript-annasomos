@@ -35,6 +35,7 @@ const game = {
                 }
             }
         }, config.fallSpeed[this.difficulty]);
+        console.log(this.fallTimerId);
     },
 
     getRandomImageTag: function () {
@@ -133,7 +134,16 @@ const game = {
                         this.secondImg = childImage;
                         this.openCards++;
                         if (areImagesMatched(this.firstImg, this.secondImg)) {
-                            this.destroyCards(this.firstImg.parentElement, this.secondImg.parentElement);
+                            this.destroyCards(
+                                {
+                                    x: this.firstImg.parentElement.dataset.col,
+                                    y: this.firstImg.parentElement.dataset.row
+                                },
+                                {
+                                    x: this.secondImg.parentElement.dataset.col,
+                                    y: this.secondImg.parentElement.dataset.row
+                                }
+                            );
                         } else {
                             setTimeout(this.hideImages, config.hideTimeOut);
                         }
@@ -183,30 +193,23 @@ const game = {
         requestAnimationFrame(animate);*/
     },
 
-    destroyCards: function (firstCard, secondCard) {
-        const firstCol = firstCard.dataset.col;
-        const firstRow = firstCard.dataset.row;
-        const secondCol = secondCard.dataset.col;
-        const secondRow = secondCard.dataset.row;
-
-        switch (getCardsOrientation(firstCard, secondCard)) {
+    destroyCards: function (firstCoordinate, secondCoordinate) {
+        switch (getCardsOrientation(getFieldByCoordinate(firstCoordinate), getFieldByCoordinate(secondCoordinate))) {
             case 'horizontal':
-                destroyCard(firstCard);
-                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
-                destroyCard(secondCard);
-                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+                destroyCard(getFieldByCoordinate(firstCoordinate));
+                sinkColumn(getFieldByCoordinate(firstCoordinate));
+                destroyCard(getFieldByCoordinate(secondCoordinate));
+                sinkColumn(getFieldByCoordinate(secondCoordinate));
                 break;
             case 'vertical':
-                destroyCard(firstCard);
-                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
-                destroyCard(secondCard);
-                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+                document.querySelectorAll(`.card[data-col="${firstCoordinate.x}"]`)
+                    .forEach(card => destroyCard(card));
                 break;
             case 'nonneighbour':
-                destroyCard(firstCard);
-                sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
-                destroyCard(secondCard);
-                sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+                destroyCard(getFieldByCoordinate(firstCoordinate));
+                sinkColumn(getFieldByCoordinate(firstCoordinate));
+                destroyCard(getFieldByCoordinate(secondCoordinate));
+                sinkColumn(getFieldByCoordinate(secondCoordinate));
 
                 break;
         }
@@ -322,7 +325,7 @@ function sinkColumn(card) {
     let fieldBelow = card;
     let cardToSink = getFieldByCoordinate({x: col, y: row});
 
-    while(cardToSink !== null && cardToSink.classList.contains('card')) {
+    while(cardToSink !== null && cardToSink.classList.contains('card') && !cardToSink.classList.contains('current')) {
         const imgTag = cardToSink.querySelector('img');
         cardToSink.classList.remove('card');
         fieldBelow.classList.add('card');
