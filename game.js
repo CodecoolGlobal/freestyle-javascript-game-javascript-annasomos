@@ -15,12 +15,12 @@ const game = {
         const card = this.createRandomCardTag(imgTag);
 
         this.fallTimerId = setInterval( () => {
-            let currentField = document.querySelector('.game-field .row .field.card.current');
+            let currentField = getCurrentCard();
             const fieldBelow = getFieldBelow(currentField);
 
             moveCard(currentField, fieldBelow);
 
-            currentField = document.querySelector('.game-field .row .field.card.current');
+            currentField = getCurrentCard();
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
                 currentField.classList.remove('current');
@@ -82,7 +82,7 @@ const game = {
 
     playerMoveBlock: function () {
         document.addEventListener('keydown', function (event) {
-            let card = document.querySelector('.game-field .row .field.card.current');
+            let card = getCurrentCard();
             let newCoordinate;
             let targetField;
             console.log(event.key);
@@ -109,6 +109,10 @@ const game = {
 
 function getFieldByCoordinate(coordinate) {
     return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"]`);
+}
+
+function getCurrentCard() {
+    return document.querySelector('.game-field .row .field.card.current');
 }
 
 function getFieldBelow(field) {
