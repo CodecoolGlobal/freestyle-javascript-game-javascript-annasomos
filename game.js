@@ -95,17 +95,19 @@ const game = {
     },
 
     getMoveDirection: function (playerInput, card) {
+        console.log(playerInput);
+        playerInput = playerInput.toLowerCase();
         switch (playerInput) {
                 case "ArrowLeft":
-                case "A":
+                case "a":
                     return {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
                     break;
                 case "ArrowRight":
-                case "D":
+                case "d":
                     return {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
                     break;
                 case "ArrowDown":
-                case "S":
+                case "s":
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
             }
