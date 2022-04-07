@@ -177,6 +177,10 @@ const game = {
             }
         }
         requestAnimationFrame(animate);*/
+    },
+
+    destroyCard: function () {
+        [firstCard, secondCard] = getMatchedCards()
     }
 }
 
@@ -219,6 +223,12 @@ function moveCard(sourceField, destinationField) {
 function isCardTouchedDown(field) {
     const fieldBelow = getFieldBelow(field);
     return (fieldBelow === null || fieldBelow.classList.contains('card'));
+}
+
+function getMatchedCards() {
+    return Array
+        .from(document.querySelectorAll('.card img'))
+        .map(imgTag => imgTag.parentElement);
 }
 
 game.init();
