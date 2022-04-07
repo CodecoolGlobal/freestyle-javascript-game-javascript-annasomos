@@ -98,15 +98,15 @@ const game = {
         console.log(playerInput);
         playerInput = playerInput.toLowerCase();
         switch (playerInput) {
-                case "ArrowLeft":
+                case "arrowleft":
                 case "a":
                     return {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
                     break;
-                case "ArrowRight":
+                case "arrowright":
                 case "d":
                     return {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
                     break;
-                case "ArrowDown":
+                case "arrowdown":
                 case "s":
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
@@ -129,7 +129,7 @@ const game = {
                         this.secondImg = childImage;
                         this.openCards++;
                         if (areImagesMatched(this.firstImg, this.secondImg)) {
-                            alert('images match!');
+
                         } else {
                             setTimeout(this.hideImages, config.hideTimeOut);
                         }
