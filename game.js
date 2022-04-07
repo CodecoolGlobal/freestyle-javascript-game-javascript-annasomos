@@ -265,4 +265,16 @@ function destroyCard(card) {
     card.parentElement.replaceChild(clonedCard, card);
 }
 
+function sinkColumn(card) {
+    Array
+        .from(document.querySelectorAll(`.card[data-col="${card.dataset.col}"]`))
+        .filter(elem => card.dataset.row > elem.dataset.row)
+        .sort((elem1, elem2) => {
+            return elem1.dataset.row > elem2.dataset.row ? 1: -1
+        })
+        .forEach(elem => {
+            moveCard(elem, getFieldBelow(elem))
+        });
+}
+
 game.init();
