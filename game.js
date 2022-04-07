@@ -203,6 +203,7 @@ const game = {
                 sinkColumn(getFieldByCoordinate({x: firstCol, y: firstRow}));
                 destroyCard(secondCard);
                 sinkColumn(getFieldByCoordinate({x: secondCol, y: secondRow}));
+
                 break;
         }
         this.openCards = 0;
@@ -224,6 +225,11 @@ function getFieldByCoordinate(coordinate) {
 
 function getCurrentCard() {
     return document.querySelector('.game-field .row .field.card.current');
+}
+
+function setCurrentScore(newCurrentScore) {
+    const scoreTag = document.querySelector('#current-score');
+    scoreTag.innerText = `Current score: ${newCurrentScore}`;
 }
 
 function getFieldBelow(field) {
@@ -271,10 +277,13 @@ function getCardsOrientation(firstCard, secondCard) {
 
 function destroyCard(card) {
     const clonedCard = document.createElement('div');
+    const currentScore = getCurrentScore();
     clonedCard.classList.add('field');
     clonedCard.dataset.col = card.dataset.col;
     clonedCard.dataset.row = card.dataset.row;
     card.parentElement.replaceChild(clonedCard, card);
+    setCurrentScore(currentScore + config.pointGain)
+
 }
 
 function sinkColumn(card) {
