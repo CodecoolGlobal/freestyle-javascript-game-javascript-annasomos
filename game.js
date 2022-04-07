@@ -135,10 +135,6 @@ const game = {
                         this.secondImg = childImage;
                         this.openCards++;
                         if (areImagesMatched(this.firstImg, this.secondImg)) {
-                            if (matchedCardsAreFalling(this.firstImg, this.secondImg)) {
-                                clearInterval(this.fallTimerId);
-                                this.createCard();
-                            }
                             this.destroyCards(
                                 {
                                     x: this.firstImg.parentElement.dataset.col,
@@ -217,6 +213,10 @@ const game = {
                 sinkColumn(getFieldByCoordinate(secondCoordinate));
 
                 break;
+        }
+        if (getCurrentCard() === null) {
+            clearInterval(this.fallTimerId);
+            this.createCard();
         }
         this.openCards = 0;
     },
@@ -351,13 +351,6 @@ function gameLost() {
     game.gameField.parentNode.replaceChild(freezeBoard, game.gameField);
     game.refreshHighScore();
     alert('YA DEAD');
-}
-
-function matchedCardsAreFalling(firstImgTag, secondImgTag) {
-    return (
-        firstImgTag.parentElement.classList.contains('current')
-        || secondImgTag.parentElement.classList.contains('current')
-    );
 }
 
 game.init();

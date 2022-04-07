@@ -2,7 +2,7 @@ export const config = {
     cols: 6,
     rows: 8,
     fallSpeed: {
-        easy: 3000,
+        easy: 1000,
         medium: 400,
         hard: 200
     },
