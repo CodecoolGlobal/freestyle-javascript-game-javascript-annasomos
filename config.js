@@ -9,6 +9,7 @@ export const config = {
     cardImageSource : 'img/memoris_card_block',
     memoryImageSources : ['img/memoris_card_block'],
     animationTime: 1500,
-    hideAnimationProgress: function (timeProgress) {return timeProgress}
+    hideAnimationProgress: function (timeProgress) {return timeProgress},
+    cardSize: 80
 };
 

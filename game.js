@@ -118,7 +118,7 @@ const game = {
             const timeProgress = (currentTime - startTime) / config.animationTime;
 
             if (timeProgress < 1) {
-                const animationProgress = (1 - config.hideAnimationProgress(timeProgress)) * 80;
+                const animationProgress = (1 - config.hideAnimationProgress(timeProgress)) * config.cardSize;
                 this.firstImg.style.width =
                 this.firstImg.style.height =
                 this.secondImg.style.width =
