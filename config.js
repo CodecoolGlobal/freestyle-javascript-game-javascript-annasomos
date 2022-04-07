@@ -6,7 +6,7 @@ export const config = {
         medium: 400,
         hard: 200
     },
-    cardImageSource : 'img/memoris_card_block',
+    cardImageSource : 'img/tetrisblock.png',
     memoryImageSources : [
         'img/puppy1.png',
         'img/puppy2.png',

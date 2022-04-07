@@ -27,8 +27,12 @@ const game = {
             currentField = getCurrentCard();
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
-                currentField.classList.remove('current');
-                game.createCard();
+                if(currentField.dataset.row === "0"){
+                    gameLost();
+                } else {
+                    currentField.classList.remove('current');
+                    game.createCard();
+                }
             }
         }, config.fallSpeed[this.difficulty]);
     },
@@ -98,15 +102,15 @@ const game = {
         console.log(playerInput);
         playerInput = playerInput.toLowerCase();
         switch (playerInput) {
-                case "ArrowLeft":
+                case "arrowleft":
                 case "a":
                     return {x: parseInt(card.dataset.col) - 1, y: card.dataset.row};
                     break;
-                case "ArrowRight":
+                case "arrowright":
                 case "d":
                     return {x: parseInt(card.dataset.col) + 1, y: card.dataset.row};
                     break;
-                case "ArrowDown":
+                case "arrowdown":
                 case "s":
                     return {x: card.dataset.col, y: parseInt(card.dataset.row) + 1};
                     break;
@@ -207,7 +211,33 @@ const game = {
                 break;
         }
         this.openCards = 0;
+    },
+    refreshHighScore(){
+        let currentScore = getCurrentScore();
+        let highScore = getHighScore();
+        if (currentScore > highScore) {
+            window.localStorage.setItem('highScore', currentScore);
+            setHighScore(currentScore)
+        }
     }
+}
+
+function setHighScore(newHighScore){
+    document.querySelector('#high-score').innerText = `High Score: ${newHighScore}`
+}
+
+function getScore(tagId){
+     let getScore = document.querySelector(tagId);
+     let Score = getScore.innerText.split(':');
+     return parseInt(Score[1]);
+}
+
+function getHighScore(){
+ return getScore('#high-score')
+}
+
+function getCurrentScore(){
+ return getScore('#current-score')
 }
 
 function areImagesMatched(firstImg,secondImg){
@@ -312,6 +342,12 @@ function sinkColumn(card) {
         .forEach(elem => {
             moveCard(elem, getFieldBelow(elem))
         });*/
+}
+
+function gameLost() {
+    let freezeBoard = game.gameField.cloneNode(true);
+    game.gameField.parentNode.replaceChild(freezeBoard, game.gameField);
+    alert('YA DEAD');
 }
 
 game.init();
