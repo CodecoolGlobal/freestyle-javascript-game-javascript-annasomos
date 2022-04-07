@@ -122,7 +122,7 @@ const game = {
                 this.firstImg.style.width =
                 this.firstImg.style.height =
                 this.secondImg.style.width =
-                this.secondImg.style.height = animationProgress;
+                this.secondImg.style.height = animationProgress + ' px';
                 requestAnimationFrame(animate);
             } else {
                 delete this.firstImg.style;
