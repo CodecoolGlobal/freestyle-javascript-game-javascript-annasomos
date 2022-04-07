@@ -4,13 +4,14 @@ import {config} from './config.js';
 const game = {
     init : function() {
         this.gameField = document.querySelector('#game-field');
-        this.difficulty = 'hard'
+        this.difficulty = 'medium'
         this.openCards = 0;
         this.firstImg = null;
         this.secondImg = null;
         this.initBlocks();
         this.createCard();
         this.playerMoveBlock();
+        this.revealCards();
     },
 
     createCard: function() {
@@ -110,34 +111,32 @@ const game = {
             }
     },
 
-    revealCards: function(){
-        let allCards = document.querySelectorAll('game-field. row. field.card');
-        for (let card of allCards){
-            card.addEventListener('click',(event )=>{
+    revealCards: function() {
+        this.gameField.addEventListener('click', (event) => {
+            if(event.target.classList.contains('card')) {
                 if (this.openCards < 2) {
-                    let childImage = getChildImage(card);
+                    let childImage = getChildImage(event.target);
                     childImage.style.width = '80px';
                     childImage.style.height = '80px';
                     childImage.classList.remove('hidden');
-                    if (this.openCards === 0){
+                    if (this.openCards === 0) {
                         this.firstImg = childImage;
                         this.openCards++;
-                    }
-                    else if(this.openCards === 1){
+                    } else if (this.openCards === 1) {
                         this.secondImg = childImage;
                         this.openCards++;
-                    }
-                    else{
-                        if (areImagesMatched(this.firstImg,this.secondImg)){
-                            //destroy cards
-                        }
-                        else{
-                            setTimeout(hideImages,config.hideTimeOut);
+                    } else {
+                        if (areImagesMatched(this.firstImg, this.secondImg)) {
+                            alert('images match!');
+                        } else {
+                            setTimeout(this.hideImages, config.hideTimeOut);
                         }
                     }
                 }
+            }
             })
         },
+
 
     hideImages: function () {
         let startTime;
