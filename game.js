@@ -1,4 +1,15 @@
 import {config} from './config.js';
+import {
+    getCardsOrientation,
+    getCurrentCard,
+    getCurrentScore,
+    getFieldBelow,
+    getFieldByCoordinate,
+    getHighScore,
+    isCardTouchedDown,
+    setCurrentScore,
+    setHighScore
+} from "./gamestatequery.js";
 
 
 const game = {
@@ -230,24 +241,6 @@ const game = {
     }
 }
 
-function setHighScore(newHighScore){
-    document.querySelector('#high-score').innerText = `High Score: ${newHighScore}`
-}
-
-function getScore(tagId){
-     let getScore = document.querySelector(tagId);
-     let Score = getScore.innerText.split(':');
-     return parseInt(Score[1]);
-}
-
-function getHighScore(){
- return getScore('#high-score')
-}
-
-function getCurrentScore(){
- return getScore('#current-score')
-}
-
 function areImagesMatched(firstImg,secondImg){
     return firstImg.src === secondImg.src;
 }
@@ -256,26 +249,6 @@ function getChildImage(card){
     return card.querySelector('img');
 }
 
-
-function getFieldByCoordinate(coordinate) {
-    return document.querySelector(`div[data-row="${coordinate.y}"][data-col="${coordinate.x}"]`);
-}
-
-function getCurrentCard() {
-    return document.querySelector('.game-field .row .field.card.current');
-}
-
-function setCurrentScore(newCurrentScore) {
-    const scoreTag = document.querySelector('#current-score');
-    scoreTag.innerText = `Current score: ${newCurrentScore}`;
-}
-
-function getFieldBelow(field) {
-    const col = parseInt(field.dataset.col);
-    const row = parseInt(field.dataset.row) + 1;
-
-    return getFieldByCoordinate({x: col, y: row});
-}
 
 function moveCard(sourceField, destinationField) {
     if (destinationField !== null && !(destinationField.classList.contains('card'))) {
@@ -286,24 +259,6 @@ function moveCard(sourceField, destinationField) {
         destinationField.classList.add('card');
         destinationField.classList.add('current');
         destinationField.appendChild(imgTag);
-    }
-}
-
-function isCardTouchedDown(field) {
-    const fieldBelow = getFieldBelow(field);
-    return (fieldBelow === null || fieldBelow.classList.contains('card'));
-}
-
-function getCardsOrientation(firstCard, secondCard) {
-    const colDifference = Number(firstCard.dataset.col) - Number(secondCard.dataset.col);
-    const rowDifference = Number(firstCard.dataset.row) - Number(secondCard.dataset.row);
-
-    if (colDifference === 0) {
-        return 'vertical';
-    } else if(rowDifference === 0) {
-        return 'horizontal';
-    } else {
-        return 'nonneighbour';
     }
 }
 
