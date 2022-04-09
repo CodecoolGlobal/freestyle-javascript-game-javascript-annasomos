@@ -34,9 +34,7 @@ const game = {
             let currentField = getCurrentCard();
             const fieldBelow = getFieldBelow(currentField);
 
-            moveCard(currentField, fieldBelow);
-
-            currentField = getCurrentCard();
+            currentField = moveCard(currentField, fieldBelow);
             if (isCardTouchedDown(currentField)) {
                 clearInterval(this.fallTimerId);
                 if(currentField.dataset.row === "0"){
@@ -259,6 +257,9 @@ function moveCard(sourceField, destinationField) {
         destinationField.classList.add('card');
         destinationField.classList.add('current');
         destinationField.appendChild(imgTag);
+        return destinationField;
+    } else {
+        return sourceField;
     }
 }
 
