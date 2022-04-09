@@ -23,7 +23,7 @@ const game = {
         this.createCard();
         this.playerMoveBlock();
         this.revealCards();
-        setHighScore(window.localStorage.getItem('highScore') || 0);
+        setHighScore(window.localStorage.getItem('highScore') ?? 0);
     },
 
     createCard: function() {
