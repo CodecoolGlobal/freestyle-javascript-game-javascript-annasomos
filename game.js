@@ -128,15 +128,17 @@ const game = {
             }
     },
 
-    revealCards: function() {
+    restyleImg: function (childImage) {
+        childImage.style.width = childImage.style.height = '80px';
+        childImage.classList.remove('hidden');
+    }, revealCards: function() {
         this.gameField.addEventListener('click', (event) => {
             console.log(`reveal image this: ${this}`)
             if(event.target.classList.contains('card')) {
                 if (this.openCards < 2) {
                     let childImage = getChildImage(event.target);
-                    childImage.style.width = '80px';
-                    childImage.style.height = '80px';
-                    childImage.classList.remove('hidden');
+                    this.restyleImg(childImage);
+
                     if (this.openCards === 0) {
                         this.firstImg = childImage;
                         this.openCards++;
